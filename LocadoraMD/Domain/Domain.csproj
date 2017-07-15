@@ -53,7 +53,7 @@
     <Compile Include="Model\Categoria.cs" />
     <Compile Include="Model\Cliente.cs" />
     <Compile Include="Model\Filme.cs" />
-    <Compile Include="Model\FilmesAluguel.cs" />
+    <Compile Include="Model\FilmeAluguel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

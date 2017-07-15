@@ -40,13 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connection\Connection.cs" />
+    <Compile Include="Connect\Connection.cs" />
+    <Compile Include="Controllers\CategoriaController.cs" />
+    <Compile Include="DAO\AluguelDAO.cs" />
+    <Compile Include="DAO\ClienteDAO.cs" />
+    <Compile Include="DAO\FilmeDAO.cs" />
+    <Compile Include="DAO\FilmeAluguelDAO.cs" />
     <Compile Include="DAO\CategoriaDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Contratos\Contratos.csproj">
       <Project>{71219B40-119C-4979-97BB-44D7CD8C1899}</Project>

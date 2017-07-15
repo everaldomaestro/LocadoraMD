@@ -1,9 +1,9 @@
-﻿using Contratos.Connection;
+﻿using Contratos.Connect;
 using System;
 using System.Data.SqlClient;
 using System.Data;
 
-namespace Controller.Connection
+namespace Controller.Connect
 {
     public class Connection : IConnection
     {

@@ -8,33 +8,36 @@ using System.Data;
 
 namespace Controller.DAO
 {
-    public class CategoriaDAO : IDAO<Categoria>
+    public class ClienteDAO : IDAO<Cliente>
     {
         private IConnection _connection;
         SqlCommand cmd;
-        Collection<Categoria> Categorias = new Collection<Categoria>();
-        Categoria Categoria;
+        Collection<Cliente> Clientes = new Collection<Cliente>();
+        Cliente Cliente;
         SqlDataAdapter adapter;
         SqlDataReader reader;
-        DataTable tblCategoria = new DataTable();
+        DataTable tblCliente = new DataTable();
 
-        public CategoriaDAO(IConnection Connection)
+        public ClienteDAO(IConnection Connection)
         {
             _connection = Connection;
         }
 
-        public void Atualizar(Categoria model)//OK
+        public void Atualizar(Cliente model)//OK
         {
             using (cmd = _connection.Buscar().CreateCommand())
             {
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandText =
-                    "UPDATE Categoria SET " +
-                    "Descricao=@Descricao," +
+                    "UPDATE Cliente SET " +
+                    "Nome=@Nome," +
+                    "Sobrenome=@Sobrenome " +
                     "WHERE ID=@ID";
 
-                cmd.Parameters.Add("@Descricao", SqlDbType.VarChar).Value =
-                    model.Descricao;
+                cmd.Parameters.Add("@Nome", SqlDbType.VarChar).Value =
+                    model.Nome;
+                cmd.Parameters.Add("@Sobrenome", SqlDbType.VarChar).Value =
+                    model.Sobrenome;
                 cmd.Parameters.Add("@ID", SqlDbType.Int).Value =
                     model.ID;
 
@@ -47,67 +50,74 @@ namespace Controller.DAO
             GC.SuppressFinalize(this);
         }
 
-        public void Inserir(Categoria model)
+        public void Inserir(Cliente model)
         {
             using (cmd = _connection.Buscar().CreateCommand())
             {
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandText =
-                    "INSERT INTO Categoria (" +
-                    "Descricao) " +
+                    "INSERT INTO Cliente (" +
+                    "Nome, " +
+                    "Sobrenome) " +
                     "VALUES(" +
-                    "@Descricao)";
+                    "@Nome," +
+                    "@Sobrenome)";
 
-                cmd.Parameters.Add("@Descricao", SqlDbType.Date).Value =
-                    model.Descricao;
+                cmd.Parameters.Add("@Nome", SqlDbType.Date).Value =
+                    model.Nome;
+                cmd.Parameters.Add("@Sobrenome", SqlDbType.Date).Value =
+                    model.Sobrenome;
 
                 cmd.ExecuteNonQuery();
             }
         }
 
-        public Collection<Categoria> ListarTudo()//OK
+        public Collection<Cliente> ListarTudo()//OK
         {
             using (cmd = _connection.Buscar().CreateCommand())
             {
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandText =
                     "SELECT " +
-                    "ID," +
+                    "Nome," +
+                    "Sobrenome," +
                     "Descricao " +
-                    "FROM Categoria " +
-                    "ORDER BY Descricao";
+                    "FROM Cliente " +
+                    "ORDER BY Nome";
 
                 using (adapter = new SqlDataAdapter(cmd))
                 {
-                    adapter.Fill(tblCategoria);
+                    adapter.Fill(tblCliente);
 
-                    foreach (DataRow row in tblCategoria.Rows)
+                    foreach (DataRow row in tblCliente.Rows)
                     {
-                        Categoria = new Categoria
+                        Cliente = new Cliente
                         {
                             ID = int.Parse(row["ID"].ToString()),
-                            Descricao = row["Descricao"].ToString()
+                            Nome = row["Nome"].ToString(),
+                            Sobrenome = row["Sobrenome"].ToString()
                         };
-                        Categorias.Add(Categoria);
+                        Clientes.Add(Cliente);
                     }
                 }
             }
 
-            return Categorias;
+            return Clientes;
         }
 
-        public Categoria LocalizarPorCodigo(params object[] keys)
+        public Cliente LocalizarPorCodigo(params object[] keys)
         {
-            Categoria = null;
+            Cliente = null;
 
             using (cmd = _connection.Buscar().CreateCommand())
             {
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandText =
                     "SELECT " +
-                    "ID," +
+                    "Nome," +
+                    "Sobrenome," +
                     "Descricao " +
-                    "FROM Categoria " +
+                    "FROM Cliente " +
                     "WHERE ID=@ID";
 
                 cmd.Parameters.Add("@ID", SqlDbType.Int).Value =
@@ -117,52 +127,55 @@ namespace Controller.DAO
                 {
                     if (reader.HasRows)
                     {
-                        Categoria = new Categoria();
+                        Cliente = new Cliente();
                         reader.Read();
-                        Categoria.ID = reader.GetInt32(0);
-                        Categoria.Descricao = reader.GetString(1);
+                        Cliente.ID = reader.GetInt32(0);
+                        Cliente.Nome = reader.GetString(1);
+                        Cliente.Sobrenome = reader.GetString(2);
                     }
                 }
             }
 
-            return Categoria;
+            return Cliente;
         }
 
-        public Categoria LocalizarPrimeiro()
+        public Cliente LocalizarPrimeiro()
         {
-            Categoria = null;
+            Cliente = null;
 
             using (cmd = _connection.Buscar().CreateCommand())
             {
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandText =
                     "SELECT TOP 1 " +
-                    "ID," +
+                    "Nome," +
+                    "Sobrenome," +
                     "Descricao " +
-                    "FROM Categoria";
+                    "FROM Cliente";
 
                 using (reader = cmd.ExecuteReader())
                 {
                     if (reader.HasRows)
                     {
-                        Categoria = new Categoria();
+                        Cliente = new Cliente();
                         reader.Read();
-                        Categoria.ID = reader.GetInt32(0);
-                        Categoria.Descricao = reader.GetString(1);
+                        Cliente.ID = reader.GetInt32(0);
+                        Cliente.Nome = reader.GetString(1);
+                        Cliente.Sobrenome = reader.GetString(2);
                     }
                 }
             }
 
-            return Categoria;
+            return Cliente;
         }
 
-        public void Remover(Categoria model)
+        public void Remover(Cliente model)
         {
             using (cmd = _connection.Buscar().CreateCommand())
             {
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandText =
-                    "DELETE FROM Categoria WHERE ID=@ID";
+                    "DELETE FROM Cliente WHERE ID=@ID";
 
                 cmd.Parameters.Add("@ID", SqlDbType.Int).Value =
                     model.ID;

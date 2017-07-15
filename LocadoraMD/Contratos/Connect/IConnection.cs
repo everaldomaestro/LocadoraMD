@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
 
-namespace Contratos.Connection
+namespace Contratos.Connect
 {
     public interface IConnection:IDisposable
     {
