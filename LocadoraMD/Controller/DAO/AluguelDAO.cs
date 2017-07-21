@@ -218,6 +218,8 @@ namespace Controller.DAO
 
                 cmd.Parameters.Add("@ID", SqlDbType.Int).Value =
                     model.ID;
+
+                cmd.ExecuteNonQuery();
             }
         }
     }

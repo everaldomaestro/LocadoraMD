@@ -30,7 +30,7 @@ namespace Controller.DAO
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandText =
                     "UPDATE Categoria SET " +
-                    "Descricao=@Descricao," +
+                    "Descricao=@Descricao " +
                     "WHERE ID=@ID";
 
                 cmd.Parameters.Add("@Descricao", SqlDbType.VarChar).Value =
@@ -58,7 +58,7 @@ namespace Controller.DAO
                     "VALUES(" +
                     "@Descricao)";
 
-                cmd.Parameters.Add("@Descricao", SqlDbType.Date).Value =
+                cmd.Parameters.Add("@Descricao", SqlDbType.VarChar).Value =
                     model.Descricao;
 
                 cmd.ExecuteNonQuery();
@@ -166,6 +166,8 @@ namespace Controller.DAO
 
                 cmd.Parameters.Add("@ID", SqlDbType.Int).Value =
                     model.ID;
+
+                cmd.ExecuteNonQuery();
             }
         }
     }
